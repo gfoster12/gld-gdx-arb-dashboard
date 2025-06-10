@@ -10,6 +10,18 @@ os.environ["YFINANCE_NO_CACHE"] = "1"
 import yfinance as yf
 import streamlit as st
 import pandas as pd
+
+st.title("GLD/GDX Arbitrage Strategy Dashboard")
+
+try:
+    gld = yf.download("GLD", period="90d", threads=False)["Close"]
+    gdx = yf.download("GDX", period="90d", threads=False)["Close"]
+    df = pd.DataFrame({"GLD": gld, "GDX": gdx})
+except Exception as e:
+    st.error(f"Failed to download price data: {e}")
+    st.stop()
+
+import pandas as pd
 import numpy as np
 import yfinance as yf
 import alpaca_trade_api as tradeapi
