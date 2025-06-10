@@ -11,6 +11,7 @@ import yfinance as yf
 import streamlit as st
 import pandas as pd
 
+st.set_page_config(page_title="GLD/GDX Arb Tracker", layout="wide")
 st.title("GLD/GDX Arbitrage Strategy Dashboard")
 
 try:
@@ -43,7 +44,6 @@ SECRET_KEY = "ezUgrAX3n33rxfhFHpOYk4kSR5RTIGBRILH36JCz"
 BASE_URL = "https://paper-api.alpaca.markets"
 api = tradeapi.REST(API_KEY, SECRET_KEY, BASE_URL, api_version='v2')
 
-st.set_page_config(page_title="GLD/GDX Arb Tracker", layout="wide")
 st.title("📊 GLD/GDX Arbitrage Strategy Dashboard")
 
 # Parameters
