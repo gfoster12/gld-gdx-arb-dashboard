@@ -14,8 +14,11 @@ import pandas as pd
 st.title("GLD/GDX Arbitrage Strategy Dashboard")
 
 try:
-    gld = yf.download("GLD", period="90d", threads=False)["Close"]
-    gdx = yf.download("GDX", period="90d", threads=False)["Close"]
+    gld = yf.download("GLD", period="90d", threads=False, progress=False)["Close"]
+    gdx = yf.download("GDX", period="90d", threads=False, progress=False)["Close"]
+    if gld.empty or gdx.empty:
+        st.error("Failed to download price data for GLD or GDX. Please try again later.")
+        st.stop()
     df = pd.DataFrame({"GLD": gld, "GDX": gdx})
 except Exception as e:
     st.error(f"Failed to download price data: {e}")
