@@ -14,19 +14,25 @@ import pandas as pd
 st.title("GLD/GDX Arbitrage Strategy Dashboard")
 
 try:
-    gld = yf.download("GLD", period="90d", threads=False, progress=False)["Close"]
-    gdx = yf.download("GDX", period="90d", threads=False, progress=False)["Close"]
+    # Download each ticker's history individually
+    gld = yf.Ticker("GLD").history(period="90d")["Close"]
+    gdx = yf.Ticker("GDX").history(period="90d")["Close"]
+
+    # Check for empty data
     if gld.empty or gdx.empty:
         st.error("Failed to download price data for GLD or GDX. Please try again later.")
         st.stop()
+
+    # Merge into DataFrame
     df = pd.DataFrame({"GLD": gld, "GDX": gdx})
 except Exception as e:
     st.error(f"Failed to download price data: {e}")
     st.stop()
 
-import pandas as pd
+st.subheader("Recent Prices")
+st.line_chart(df)
+
 import numpy as np
-import yfinance as yf
 import alpaca_trade_api as tradeapi
 import plotly.graph_objects as go
 from datetime import datetime
