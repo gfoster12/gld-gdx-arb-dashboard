@@ -5,7 +5,9 @@ Streamlit Dashboard: GLD/GDX Arbitrage Paper Trading Tracker
 - Plots historical equity line (paper simulated)
 - Connects to Alpaca paper account
 """
-
+import os
+os.environ["YFINANCE_NO_CACHE"] = "1"
+import yfinance as yf
 import streamlit as st
 import pandas as pd
 import numpy as np
