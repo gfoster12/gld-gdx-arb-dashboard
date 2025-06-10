@@ -1,0 +1,29 @@
+name: GLD-GDX Auto Trader
+
+on:
+  schedule:
+    - cron: "0 21 * * 1-5" # Every weekday at 21:00 UTC
+  workflow_dispatch:
+
+jobs:
+  run-strategy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install yfinance alpaca-trade-api pandas numpy
+
+      - name: Run auto-trader script
+        env:
+          APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+        run: |
+          python auto_gld_gdx_trader.py
