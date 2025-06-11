@@ -1,3 +1,4 @@
+
 name: GLD-GDX Auto Trader
 
 on:
@@ -18,7 +19,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-         run: pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Run auto-trader script
         env:
@@ -26,3 +27,4 @@ jobs:
           APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
         run: |
           python auto_gld_gdx_trader.py
+
