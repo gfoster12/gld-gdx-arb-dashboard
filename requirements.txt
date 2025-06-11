@@ -5,3 +5,4 @@ pandas
 alpaca-trade-api
 plotly
 urllib3==1.26.18
+alpha_vantage
