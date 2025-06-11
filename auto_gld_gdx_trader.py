@@ -5,6 +5,7 @@ import yfinance as yf
 from datetime import datetime, timedelta, timezone
 import alpaca_trade_api as tradeapi
 import time
+import sys
 
 # Load Alpaca credentials from environment variables or your secrets manager
 API_KEY = os.getenv("APCA_API_KEY_ID")
@@ -27,6 +28,13 @@ api = tradeapi.REST(API_KEY, SECRET_KEY, BASE_URL, api_version='v2')
 def get_latest_data():
     # Download last 21 days to get 20-day rolling stats
     df = yf.download([GLD_TICKER, GDX_TICKER], period=f"{LOOKBACK+1}d", interval="1d")
+    
+    # Check for failed download or empty DataFrame
+    if df.empty or df.isnull().all().all() or 'Close' not in df or 'Volume' not in df:
+        print("Failed to download data for GLD or GDX. DataFrame is empty or missing required columns.")
+        print(df)
+        sys.exit(1)
+        
     price = df['Close'].dropna()
     vol = df['Volume'].dropna()
     price.columns = ['GLD', 'GDX']
